@@ -1,6 +1,7 @@
 const express = require("express");
 const chats = require("./data/data");
 const app = express();
+const dbConnect = require("./config/dbConnect");
 
 require("dotenv").config();
 
@@ -11,6 +12,8 @@ app.listen(process.env.PORT, () => {
 app.get("/", (req, res) => {
   res.send("API is running");
 });
+
+dbConnect();
 
 app.get("/api/chat", (req, res) => {
   res.status(200).json({
