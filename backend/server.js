@@ -2,6 +2,7 @@ const express = require("express");
 const chats = require("./data/data");
 const app = express();
 const dbConnect = require("./config/dbConnect");
+const userRoutes = require("./routes/userRoutes");
 
 require("dotenv").config();
 
