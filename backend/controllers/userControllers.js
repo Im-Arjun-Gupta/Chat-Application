@@ -3,6 +3,7 @@ const User = require("../models/userModel");
 const generateToken = require("../config/generateToken");
 
 const registerUser = asyncHandler(async (req, res) => {
+    
     const { name, email, password, pic } = req.body;
 
     if (!name || !email || !password) {
@@ -13,7 +14,7 @@ const registerUser = asyncHandler(async (req, res) => {
     const userExists = await User.findOne({email});
 
     if (userExists) {
-        res.status(400);
+        res.status(400).json({message: "User already exists"});
         throw new Error("User already exists");
     }
 
@@ -22,11 +23,11 @@ const registerUser = asyncHandler(async (req, res) => {
     });
 
     if (user) {
-        res.status(201).json({
+        res.status(200).json({
             _id: user._id,
             name: user.name,
             email: user.email,
-            pid: user.pic,
+            pic: user.pic,
             token: generateToken(user._id),
         });
     } else {
@@ -36,4 +37,27 @@ const registerUser = asyncHandler(async (req, res) => {
 
 });
 
-module.exports = { registerUser };
+const authUser = asyncHandler(async(req, res) => {
+
+    const { email, password} = req.body;
+
+    const user = await User.findOne({email});
+
+    if (user && (await user.matchPassword(password))){
+        res.status(201).json({
+            _id:user._id,
+            name: user.name,
+            email: user.email,
+            pic: user.pic,
+            token: generateToken(user._id)
+        })
+    } else {
+        res.status(400).json({
+            message: "Invalid Email or Password"
+        })
+        throw new Error("Invalid Email or Password")
+    }
+
+});
+
+module.exports = { registerUser, authUser };
