@@ -4,12 +4,14 @@ const PORT = process.env.PORT || 5000;
 const dbConnect = require("./config/dbConnect");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 require("dotenv").config();
 
 app.use(express.json());
 app.use("/api/chat", chatRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/message", messageRoutes);
 
 app.get("/", (req, res) => {
   res.send("API is running");
