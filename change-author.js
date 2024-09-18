@@ -5,7 +5,7 @@ const NEW_NAME = "Arjun Gupta"; // Replace with the new author name
 const NEW_EMAIL = "guptaarjun519@gmail.com"; // Replace with the new email
 
 const changeAuthorCommand = `
-git filter-branch --env-filter '
+git filter-branch --env-filter -f '
 if [ "$GIT_COMMITTER_EMAIL" = "${OLD_EMAIL}" ]
 then
     export GIT_COMMITTER_NAME="${NEW_NAME}";
