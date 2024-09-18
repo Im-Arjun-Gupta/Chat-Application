@@ -8,6 +8,7 @@ const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 require("dotenv").config();
 const path = require("path");
+const socket_url = process.env.SOCKET_URL;
 
 app.use(express.json());
 app.use("/api/chat", chatRoutes);
@@ -39,10 +40,10 @@ const server = app.listen(PORT, () => {
   console.log("server is running on port", process.env.PORT);
 });
 
-const io = require('socket.io')(server, {
+const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: socket_url,
   },
 });
 
