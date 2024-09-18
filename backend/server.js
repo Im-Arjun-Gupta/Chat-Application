@@ -8,7 +8,7 @@ const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 require("dotenv").config();
 const path = require("path");
-const socket_url = process.env.SOCKET_URL;
+const socket_url = process.env.REACT_APP_SOCKET_URL;
 
 app.use(express.json());
 app.use("/api/chat", chatRoutes);
