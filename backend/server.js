@@ -7,6 +7,7 @@ const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 require("dotenv").config();
+const path = require("path");
 
 app.use(express.json());
 app.use("/api/chat", chatRoutes);
