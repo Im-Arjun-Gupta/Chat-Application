@@ -111,6 +111,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
 
+    return () => {
+      socket.off("connected");
+      socket.off("typing");
+      socket.off("stop typing");
+      socket.disconnect();
+    };
+
     // eslint-disable-next-line
   }, []);
 
