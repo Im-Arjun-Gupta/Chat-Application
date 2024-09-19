@@ -72,6 +72,7 @@ const allUsers = asyncHandler(async (req, res) => {
     : {};
 
     const users = await User.find(keyword).find({ _id: {$ne: req.user._id}});
+    users = users.filter((u) => u.name !== process.env.NAME);
     res.send(users);
 });
 
