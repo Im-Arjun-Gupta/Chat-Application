@@ -58,6 +58,21 @@ const GroupChatModal = ({ children }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
+      const isOnlyWhitespace = /^\s*$/.test(search);
+      if (isOnlyWhitespace) {
+        setSearchResult([]);
+        setLoading(false);
+        toast({
+          title: "Error Occured!",
+          description: "Only spaces not allowed",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
+        return;
+      }
+      search.trim();
       const { data } = await axios.get(`/api/user?search=${search}`, config);
       console.log(data);
       setLoading(false);
