@@ -55,15 +55,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   }, []);
 
   const showBrowserNotification = (message) => {
-    if (
-      Notification.permission === "granted" &&
-      (!selectedChat || selectedChat._id !== message.chat._id)
-    ) {
+    if (Notification.permission === "granted") {
       const sender = message.sender.name || "New message";
       new Notification("New Message", {
         body: `${sender}: ${message.content}`,
         icon: message.sender.pic || "https://via.placeholder.com/50",
       });
+      notification.onclick = () => {
+        // Navigate to a specific page or perform an action
+        console.log("Notification clicked!");
+        window.location.href = "/chat"; // Example: Redirect to chat page
+      };
     }
   };
 
@@ -98,6 +100,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           showBrowserNotification(newMessageReceived);
         }
       } else {
+        showBrowserNotification(newMessageReceived);
         setMessages((prevMessages) => [...prevMessages, newMessageReceived]);
       }
     };
