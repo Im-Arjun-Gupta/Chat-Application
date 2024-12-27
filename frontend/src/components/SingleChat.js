@@ -162,7 +162,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   }, [selectedChat]);
 
   useEffect(() => {
+    if (Notification.permission === 'default' || Notification.permission === 'denied') {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          console.log('Notification permission granted');
+        } else {
+          console.log("Notification permission denied");
+        }
+      });
+    }
     socket.on("message recieved", (newMessageRecieved) => {
+      console.log(newMessageRecieved);
       if (
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
@@ -170,9 +180,21 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         if (!notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
           setFetchAgain(!fetchAgain);
+          if (Notification.permission === 'granted') {
+            new Notification('New Notification', {
+              body: newMessageRecieved.content,
+              icon: 'https://via.placeholder.com/50'
+            });
+          }
         }
       } else {
         setMessages([...messages, newMessageRecieved]);
+        if (Notification.permission === "granted") {
+          new Notification("New Notification", {
+            body: newMessageRecieved.content,
+            icon: "https://via.placeholder.com/50",
+          });
+        }
       }
     });
   });
