@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 5000;
+const cors = require('cors')
 const dbConnect = require("./config/dbConnect");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
@@ -11,6 +12,7 @@ const path = require("path");
 const socket_url = process.env.REACT_APP_SOCKET_URL;
 
 app.use(express.json());
+app.use(cors());
 app.use("/api/chat", chatRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/message", messageRoutes);

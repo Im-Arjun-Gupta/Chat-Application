@@ -181,6 +181,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           setNotification([newMessageRecieved, ...notification]);
           setFetchAgain(!fetchAgain);
           if (Notification.permission === 'granted') {
+            console.log("Permission granted, sending notification...");
             new Notification('New Notification', {
               body: newMessageRecieved.content,
               icon: 'https://via.placeholder.com/50'
@@ -190,6 +191,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       } else {
         setMessages([...messages, newMessageRecieved]);
         if (Notification.permission === "granted") {
+          console.log("Permission granted, sending notification...");
           new Notification("New Notification", {
             body: newMessageRecieved.content,
             icon: "https://via.placeholder.com/50",
